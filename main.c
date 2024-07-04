@@ -1,17 +1,45 @@
 #include <stdio.h>
+#include <string.h>
+
+// Function to compute the factorial of a number
+int factorial(int n) {
+    int fact = 1;
+    for (int i = 1; i <= n; i++) {
+        fact *= i;
+    }
+    return fact;
+}
+
+// Function to compute the number of anagrams for a given word
+int countAnagrams(char word[]) {
+    int length = strlen(word);
+    int letterCount[26] = {0};  // Array to count occurrences of each letter
+
+    // Count occurrences of each letter in the word
+    for (int i = 0; i < length; i++) {
+        letterCount[word[i] - 'A']++;
+    }
+
+    // Calculate the denominator for permutations considering repeated letters
+    int denominator = 1;
+    for (int i = 0; i < 26; i++) {
+        if (letterCount[i] > 1) {
+            denominator *= factorial(letterCount[i]);
+        }
+    }
+
+    // Calculate the number of anagrams using factorial formula
+    int anagramCount = factorial(length) / denominator;
+    return anagramCount;
+}
 
 int main() {
-    int t1, t2, t3;
-    float totalTime, finalTime;
-    // Зчитуємо вхідні дані
-    printf("Введіть три значення : ");
-    scanf("%d %d %d", &t1, &t2, &t3);
+    char word[15];
+    printf("Enter a word in uppercase letters: ");
+    scanf("%s", word);
 
-    // Обчислюємо час в годинах
-    totalTime = (t1+t2+t3)/3.0;
-    // Обчислюємо кінцевий час (час, необхідний для з'їдання пирога)
-    finalTime = totalTime / 3.0;
-    // Виводимо результат з округленням до 2 знаків після коми
-    printf("Час, необхідний для з'їдання пирога: %0.2f годин", finalTime);
+    int anagramCount = countAnagrams(word);
+    printf("Number of anagrams: %d\n", anagramCount);
+
     return 0;
 }
