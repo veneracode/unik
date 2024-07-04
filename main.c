@@ -1,6 +1,7 @@
+
 #include <stdio.h>
 
-// Функція для обчислення НСД двох чисел за алгоритмом Евкліда
+// Function to calculate the GCD of two numbers using Euclid's algorithm
 int calculateGCD(int a, int b) {
     if (b == 0) {
         return a;
@@ -8,16 +9,16 @@ int calculateGCD(int a, int b) {
     return calculateGCD(b, a % b);
 }
 
-// Функція для обчислення НСК двох чисел
+// Function to calculate the LCM of two numbers
 int calculateLCM(int a, int b) {
     int gcd = calculateGCD(a, b);
-    // НСК для двох чисел = (добуток чисел) / (НСД чисел)
+    // LCM of two numbers = (product of the numbers) / (GCD of the numbers)
     return (a * b) / gcd;
 }
 
-// Функція для обчислення НСК множини чисел
+// Function to calculate the LCM of an array of numbers
 int calculateMultipleLCM(int numbers[], int count) {
-    int lcm = numbers[0]; // Ініціалізуємо змінну НСК значенням першого числа
+    int lcm = numbers[0]; // Initialize LCM with the first number
 
     for (int i = 1; i < count; i++) {
         lcm = calculateLCM(lcm, numbers[i]);
@@ -25,20 +26,21 @@ int calculateMultipleLCM(int numbers[], int count) {
 
     return lcm;
 }
-// Інтерфейс програми
+
+// Program interface
 int main() {
     int count;
-    printf("Введіть кількість чисел: ");
+    printf("Enter the number of integers: ");
     scanf("%d", &count);
 
     int numbers[count];
-    printf("Введіть числа, розділені пробілом: ");
+    printf("Enter the integers separated by space: ");
     for (int i = 0; i < count; i++) {
         scanf("%d", &numbers[i]);
     }
 
     int lcm = calculateMultipleLCM(numbers, count);
-    printf("Найменше спільне кратне: %d\n", lcm);
+    printf("Least Common Multiple: %d\n", lcm);
 
     return 0;
 }
