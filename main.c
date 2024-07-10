@@ -1,45 +1,30 @@
 #include <stdio.h>
-#include <string.h>
+#include <math.h>
 
-// Function to compute the factorial of a number
-int factorial(int n) {
-    int fact = 1;
-    for (int i = 1; i <= n; i++) {
-        fact *= i;
-    }
-    return fact;
-}
+int min_steps(int x, int y) {
+    int steps = 0;
+    int distance = y - x;
 
-// Function to compute the number of anagrams for a given word
-int countAnagrams(char word[]) {
-    int length = strlen(word);
-    int letterCount[26] = {0};  // Array to count occurrences of each letter
+    steps += 2; // Перший і останній кроки
 
-    // Count occurrences of each letter in the word
-    for (int i = 0; i < length; i++) {
-        letterCount[word[i] - 'A']++;
+    distance -= 2;
+
+    int k = 1;
+    while (distance > 0) {
+        steps++;
+        distance -= 2 * k;
+        k++;
     }
 
-    // Calculate the denominator for permutations considering repeated letters
-    int denominator = 1;
-    for (int i = 0; i < 26; i++) {
-        if (letterCount[i] > 1) {
-            denominator *= factorial(letterCount[i]);
-        }
-    }
-
-    // Calculate the number of anagrams using factorial formula
-    int anagramCount = factorial(length) / denominator;
-    return anagramCount;
+    return steps;
 }
 
 int main() {
-    char word[15];
-    printf("Enter a word in uppercase letters: ");
-    scanf("%s", word);
+    int x = 45;
+    int y = 51;
 
-    int anagramCount = countAnagrams(word);
-    printf("Number of anagrams: %d\n", anagramCount);
+    int result = min_steps(x, y);
+    printf("Мінімальна кількість кроків від %d до %d: %d\n", x, y, result);
 
     return 0;
 }
